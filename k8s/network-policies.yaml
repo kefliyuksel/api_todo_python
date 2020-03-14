@@ -1,0 +1,50 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ns0
+  namespace: development
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ns1
+  namespace: development
+spec:
+  podSelector:
+    matchLabels:
+      app: api2
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: api1
+    ports:
+    - protocol: TCP
+      port: 5000
+  policyTypes:
+  - Ingress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ns2
+  namespace: development
+spec:
+  podSelector:
+    matchLabels:
+      app: api1
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app: api2
+    ports:
+    - protocol: TCP
+      port: 5000
+  policyTypes:
+  - Egress

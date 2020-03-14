@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api1
+  namespace: development
+  labels:
+    app: api1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api1
+  template:
+    metadata:
+      labels:
+        app: api1
+    spec:
+      containers:
+      - name: api1
+        image: kefliyuksel/todoapi
+        ports:
+        - containerPort: 5000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api2
+  namespace: development
+  labels:
+    app: api2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api2
+  template:
+    metadata:
+      labels:
+        app: api2
+    spec:
+      containers:
+      - name: api2
+        image: kefliyuksel/todoapi
+        ports:
+        - containerPort: 5000
+    
